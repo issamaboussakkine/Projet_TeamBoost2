@@ -42,4 +42,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Relations pour les Kudos
+    public function sentKudos()
+    {
+        return $this->hasMany(Kudo::class, 'from_user_id');
+    }
+
+    public function receivedKudos()
+    {
+        return $this->hasMany(Kudo::class, 'to_user_id');
+    }
+
+    public function kudosCount()
+    {
+        return $this->receivedKudos()->count();
+    }
 }
