@@ -38,6 +38,11 @@ class AdminController extends Controller
     
     public function makeEmployee($id)
     {
+        // Empêcher un admin de se rétrograder lui-même
+        if ($id == auth()->id()) {
+            return back()->with('error', 'Vous ne pouvez pas vous rétrograder vous-même !');
+        }
+        
         $user = User::findOrFail($id);
         $user->role = 'employee';
         $user->save();
